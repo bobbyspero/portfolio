@@ -9,7 +9,7 @@ const projects = [
     { id: 7, title: 'SOUND_WAVE.DSP', ascii: '+', description: 'Audio Synthesis' },
     { id: 8, title: 'CLOUD_NEXUS.NET', ascii: '=', description: 'Cloud Infrastructure' },
     { id: 9, title: 'API_GATEWAY.REST', ascii: '~', description: 'Backend Services' },
-    { id: 10, title: 'BRAND_SENTIMENT.TRACK', ascii: '📊', description: 'Brand Sentiment Tracker', url: './brand-sentiment-tracker/dist/index.html' },
+    { id: 10, title: 'BRAND_SENTIMENT.TRACK', ascii: '📊', description: 'Brand Sentiment Tracker', url: 'https://bobbyspero.github.io/sentiment/' },
 ];
 
 // DOM Elements
