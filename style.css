@@ -1,12 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=VT323&family=Courier+Prime:wght@400;700&display=swap');
 
 :root {
-    --primary-color: #00ff41;
-    --secondary-color: #00ffff;
-    --bg-color: #0a0a0a;
-    --text-color: #00ff41;
-    --grid-color: #1a1a1a;
-    --border-color: #00ff41;
+    --primary-color: #000000;
+    --secondary-color: #333333;
+    --bg-color: #ffffff;
+    --text-color: #000000;
+    --grid-color: #f5f5f5;
+    --border-color: #000000;
 }
 
 * {
@@ -21,7 +21,7 @@ body {
     color: var(--text-color);
     overflow-x: hidden;
     min-height: 100vh;
-    cursor: crosshair;
+    cursor: default;
 }
 
 /* ASCII Background Effect */
@@ -66,25 +66,16 @@ body {
 
 .header::before,
 .header::after {
-    content: '[ + + + + + + + + + + + + + + + + + + + + + ]';
-    display: block;
-    font-size: 1rem;
-    color: var(--secondary-color);
-    letter-spacing: 4px;
-    opacity: 0.5;
+    content: '';
+    display: none;
 }
 
 h1.glitch {
     font-size: clamp(2rem, 8vw, 4rem);
     font-weight: bold;
     color: var(--primary-color);
-    text-shadow:
-        0 0 10px var(--primary-color),
-        0 0 20px var(--primary-color),
-        0 0 30px var(--primary-color);
     letter-spacing: 0.1em;
     position: relative;
-    animation: glitch 5s infinite;
 }
 
 @keyframes glitch {
@@ -152,7 +143,7 @@ h1.glitch {
 .grid-item {
     position: relative;
     aspect-ratio: 1;
-    background: linear-gradient(135deg, rgba(0, 255, 65, 0.1), rgba(0, 255, 255, 0.1));
+    background: #ffffff;
     border: 2px solid var(--border-color);
     cursor: pointer;
     transform-style: preserve-3d;
@@ -170,15 +161,15 @@ h1.glitch {
     background:
         repeating-linear-gradient(
             0deg,
-            rgba(0, 255, 65, 0.1) 0px,
-            rgba(0, 255, 65, 0.1) 1px,
+            rgba(0, 0, 0, 0.05) 0px,
+            rgba(0, 0, 0, 0.05) 1px,
             transparent 1px,
             transparent 2px
         ),
         repeating-linear-gradient(
             90deg,
-            rgba(0, 255, 65, 0.1) 0px,
-            rgba(0, 255, 65, 0.1) 1px,
+            rgba(0, 0, 0, 0.05) 0px,
+            rgba(0, 0, 0, 0.05) 1px,
             transparent 1px,
             transparent 2px
         );
@@ -200,12 +191,9 @@ h1.glitch {
 
 .grid-item:hover {
     transform: translateZ(50px) scale(1.05);
-    border-color: var(--secondary-color);
-    box-shadow:
-        0 0 30px rgba(0, 255, 65, 0.5),
-        0 0 60px rgba(0, 255, 255, 0.3),
-        inset 0 0 30px rgba(0, 255, 65, 0.2);
-    background: linear-gradient(135deg, rgba(0, 255, 65, 0.2), rgba(0, 255, 255, 0.2));
+    border-color: var(--primary-color);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    background: #f9f9f9;
 }
 
 .grid-item:hover::after {
@@ -226,9 +214,8 @@ h1.glitch {
 
 .grid-number {
     font-size: clamp(1.5rem, 4vw, 2.5rem);
-    color: var(--secondary-color);
+    color: var(--primary-color);
     font-weight: bold;
-    text-shadow: 0 0 10px var(--secondary-color);
 }
 
 .grid-label {
@@ -243,9 +230,9 @@ h1.glitch {
 .title-tracker {
     position: fixed;
     padding: 1rem 2rem;
-    background: rgba(0, 0, 0, 0.9);
-    border: 2px solid var(--secondary-color);
-    color: var(--secondary-color);
+    background: rgba(255, 255, 255, 0.95);
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
     font-size: clamp(1rem, 3vw, 1.5rem);
     font-weight: bold;
     pointer-events: none;
@@ -254,10 +241,7 @@ h1.glitch {
     z-index: 1000;
     transition: opacity 0.3s ease;
     white-space: nowrap;
-    text-shadow: 0 0 10px var(--secondary-color);
-    box-shadow:
-        0 0 20px rgba(0, 255, 255, 0.5),
-        inset 0 0 20px rgba(0, 255, 255, 0.1);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
 }
 
 .title-tracker.active {
@@ -345,29 +329,4 @@ h1.glitch {
     }
 }
 
-/* Scanline effect */
-@keyframes scanline {
-    0% {
-        transform: translateY(-100%);
-    }
-    100% {
-        transform: translateY(100vh);
-    }
-}
-
-body::after {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        transparent 50%,
-        rgba(0, 255, 65, 0.02) 50%
-    );
-    background-size: 100% 4px;
-    pointer-events: none;
-    z-index: 9999;
-    animation: scanline 8s linear infinite;
-}
+/* Scanline effect - removed for clean look */

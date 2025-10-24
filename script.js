@@ -1,14 +1,56 @@
-// Portfolio projects data
+// ====================================================================
+// CONFIGURATION: UPDATE YOUR PROJECTS HERE
+// ====================================================================
+// To add or modify projects:
+// 1. Update the projects array below
+// 2. Each project needs: id, title, ascii, description, and url (optional)
+// 3. The ascii character appears as a decorative background symbol
+// 4. Save this file and refresh your browser
+// ====================================================================
+
 const projects = [
-    { id: 1, title: 'NEURAL_NETWORK.AI', ascii: '#', description: 'Machine Learning Project' },
-    { id: 2, title: 'CRYPTO_VAULT.SYS', ascii: '@', description: 'Blockchain Application' },
-    { id: 3, title: 'QUANTUM_CODE.EXE', ascii: '%', description: 'Algorithm Visualization' },
-    { id: 4, title: 'DATA_MATRIX.DB', ascii: '$', description: 'Big Data Analytics' },
-    { id: 5, title: 'CYBER_GUARD.SEC', ascii: '&', description: 'Security Framework' },
-    { id: 6, title: 'PIXEL_FORGE.GFX', ascii: '*', description: 'Graphics Engine' },
-    { id: 7, title: 'SOUND_WAVE.DSP', ascii: '+', description: 'Audio Synthesis' },
-    { id: 8, title: 'CLOUD_NEXUS.NET', ascii: '=', description: 'Cloud Infrastructure' },
-    { id: 9, title: 'API_GATEWAY.REST', ascii: '~', description: 'Backend Services' },
+    {
+        id: 1,
+        title: 'Project One',
+        ascii: '#',
+        description: 'First Project',
+        url: '#' // Optional: add link to project
+    },
+    {
+        id: 2,
+        title: 'Project Two',
+        ascii: '@',
+        description: 'Second Project',
+        url: '#'
+    },
+    {
+        id: 3,
+        title: 'Project Three',
+        ascii: '%',
+        description: 'Third Project',
+        url: '#'
+    },
+    {
+        id: 4,
+        title: 'Project Four',
+        ascii: '$',
+        description: 'Fourth Project',
+        url: '#'
+    },
+    {
+        id: 5,
+        title: 'Project Five',
+        ascii: '&',
+        description: 'Fifth Project',
+        url: '#'
+    },
+    {
+        id: 6,
+        title: 'Project Six',
+        ascii: '*',
+        description: 'Sixth Project',
+        url: '#'
+    },
 ];
 
 // DOM Elements
@@ -75,19 +117,11 @@ function handleMouseEnter(e) {
     const title = e.currentTarget.dataset.title;
     titleTracker.textContent = title;
     titleTracker.classList.add('active');
-
-    // Add glow effect to the item
-    e.currentTarget.style.boxShadow = `
-        0 0 30px rgba(0, 255, 65, 0.5),
-        0 0 60px rgba(0, 255, 255, 0.3),
-        inset 0 0 30px rgba(0, 255, 65, 0.2)
-    `;
 }
 
 // Handle mouse leave from grid item
 function handleMouseLeave(e) {
     titleTracker.classList.remove('active');
-    e.currentTarget.style.boxShadow = '';
 }
 
 // Handle mouse move for title tracking
@@ -108,16 +142,15 @@ function updateTitlePosition() {
 // Handle click on grid item
 function handleClick(e) {
     const projectId = e.currentTarget.dataset.id;
-    const title = e.currentTarget.dataset.title;
+    const projectUrl = e.currentTarget.dataset.url;
 
-    // Create glitch effect
-    createGlitchEffect(e.currentTarget);
+    // Find the project to get its URL
+    const project = projects.find(p => p.id == projectId);
 
-    // Log click (you can replace this with actual navigation)
-    console.log(`Clicked project: ${title} (ID: ${projectId})`);
-
-    // Optional: Navigate to project page
-    // window.location.href = `/project/${projectId}`;
+    if (project && project.url && project.url !== '#') {
+        // Navigate to project URL
+        window.location.href = project.url;
+    }
 }
 
 // Create glitch effect on click
