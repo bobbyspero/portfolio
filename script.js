@@ -165,14 +165,21 @@ function createGlitchEffect(element) {
 // Add parallax effect to the grid based on mouse position
 function addParallaxEffect() {
     document.addEventListener('mousemove', (e) => {
-        const moveX = (e.clientX - window.innerWidth / 2) / 50;
-        const moveY = (e.clientY - window.innerHeight / 2) / 50;
+        // Calculate rotation based on mouse position
+        // More movement = more rotation (divided by smaller number for stronger effect)
+        const moveX = (e.clientX - window.innerWidth / 2) / 30;
+        const moveY = (e.clientY - window.innerHeight / 2) / 30;
 
+        // Apply smooth rotation to the grid
         gridWrapper.style.transform = `
-            translateY(0px)
             rotateX(${-moveY}deg)
             rotateY(${moveX}deg)
         `;
+    });
+
+    // Reset rotation when mouse leaves the window
+    document.addEventListener('mouseleave', () => {
+        gridWrapper.style.transform = 'rotateX(0deg) rotateY(0deg)';
     });
 }
 

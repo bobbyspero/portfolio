@@ -121,22 +121,7 @@ h1.glitch {
     max-width: 1200px;
     width: 100%;
     transform-style: preserve-3d;
-    animation: float 6s ease-in-out infinite;
-}
-
-@keyframes float {
-    0%, 100% {
-        transform: translateY(0px) rotateX(0deg) rotateY(0deg);
-    }
-    25% {
-        transform: translateY(-20px) rotateX(5deg) rotateY(-5deg);
-    }
-    50% {
-        transform: translateY(-10px) rotateX(-3deg) rotateY(3deg);
-    }
-    75% {
-        transform: translateY(-15px) rotateX(3deg) rotateY(-3deg);
-    }
+    transition: transform 0.1s ease-out;
 }
 
 /* Grid Items */
