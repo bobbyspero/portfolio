@@ -23,6 +23,29 @@
         <div class="title-tracker" id="titleTracker"></div>
     </div>
 
+    <!-- Expanded Project View -->
+    <div class="project-modal" id="projectModal">
+        <div class="project-modal-overlay" id="modalOverlay"></div>
+        <div class="project-modal-content">
+            <button class="modal-close" id="modalClose">&times;</button>
+
+            <div class="modal-body">
+                <div class="modal-gallery">
+                    <button class="gallery-nav gallery-prev" id="galleryPrev">&lsaquo;</button>
+                    <img class="gallery-image" id="galleryImage" src="" alt="Project image">
+                    <button class="gallery-nav gallery-next" id="galleryNext">&rsaquo;</button>
+                    <div class="gallery-dots" id="galleryDots"></div>
+                </div>
+
+                <div class="modal-info">
+                    <h2 class="modal-title" id="modalTitle"></h2>
+                    <p class="modal-description" id="modalDescription"></p>
+                    <a class="modal-link" id="modalLink" href="#" target="_blank" rel="noopener noreferrer">View Project →</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>

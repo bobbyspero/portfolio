@@ -3,9 +3,15 @@
 // ====================================================================
 // To add or modify projects:
 // 1. Update the projects array below
-// 2. Each project needs: id, title, ascii, description, and url (optional)
-// 3. The ascii character appears as a decorative background symbol
-// 4. Save this file and refresh your browser
+// 2. Each project needs:
+//    - id: Unique number
+//    - title: Project name (appears on hover)
+//    - ascii: Single character for decoration
+//    - description: Short description (shown on grid card)
+//    - fullDescription: Detailed description (shown in expanded view)
+//    - gallery: Array of image URLs for the gallery
+//    - link: External link (optional)
+// 3. Save this file and refresh your browser
 // ====================================================================
 
 const projects = [
@@ -14,42 +20,72 @@ const projects = [
         title: 'Project One',
         ascii: '#',
         description: 'First Project',
-        url: '#' // Optional: add link to project
+        fullDescription: 'This is a detailed description of Project One. You can add multiple paragraphs, technical details, your role, technologies used, and any other information about this project.',
+        gallery: [
+            'https://via.placeholder.com/800x600/000000/FFFFFF?text=Project+1+Image+1',
+            'https://via.placeholder.com/800x600/000000/FFFFFF?text=Project+1+Image+2',
+            'https://via.placeholder.com/800x600/000000/FFFFFF?text=Project+1+Image+3'
+        ],
+        link: 'https://example.com' // Optional external link
     },
     {
         id: 2,
         title: 'Project Two',
         ascii: '@',
         description: 'Second Project',
-        url: '#'
+        fullDescription: 'Detailed information about Project Two goes here. Explain what makes this project special, the challenges you faced, and the solutions you implemented.',
+        gallery: [
+            'https://via.placeholder.com/800x600/000000/FFFFFF?text=Project+2+Image+1',
+            'https://via.placeholder.com/800x600/000000/FFFFFF?text=Project+2+Image+2'
+        ],
+        link: ''
     },
     {
         id: 3,
         title: 'Project Three',
         ascii: '%',
         description: 'Third Project',
-        url: '#'
+        fullDescription: 'An in-depth look at Project Three. Include details about the technology stack, your contribution, and the impact of this work.',
+        gallery: [
+            'https://via.placeholder.com/800x600/000000/FFFFFF?text=Project+3+Image+1'
+        ],
+        link: ''
     },
     {
         id: 4,
         title: 'Project Four',
         ascii: '$',
         description: 'Fourth Project',
-        url: '#'
+        fullDescription: 'Project Four description with all the relevant details about the work, process, and outcomes.',
+        gallery: [
+            'https://via.placeholder.com/800x600/000000/FFFFFF?text=Project+4+Image+1',
+            'https://via.placeholder.com/800x600/000000/FFFFFF?text=Project+4+Image+2'
+        ],
+        link: ''
     },
     {
         id: 5,
         title: 'Project Five',
         ascii: '&',
         description: 'Fifth Project',
-        url: '#'
+        fullDescription: 'Everything you need to know about Project Five, including technical specifications and achievements.',
+        gallery: [
+            'https://via.placeholder.com/800x600/000000/FFFFFF?text=Project+5+Image+1'
+        ],
+        link: ''
     },
     {
         id: 6,
         title: 'Project Six',
         ascii: '*',
         description: 'Sixth Project',
-        url: '#'
+        fullDescription: 'A comprehensive overview of Project Six with details on the development process and final results.',
+        gallery: [
+            'https://via.placeholder.com/800x600/000000/FFFFFF?text=Project+6+Image+1',
+            'https://via.placeholder.com/800x600/000000/FFFFFF?text=Project+6+Image+2',
+            'https://via.placeholder.com/800x600/000000/FFFFFF?text=Project+6+Image+3'
+        ],
+        link: ''
     },
 ];
 
@@ -139,28 +175,164 @@ function updateTitlePosition() {
     titleTracker.style.top = `${mouseY - 40}px`;
 }
 
-// Handle click on grid item
+// Handle click on grid item - open expanded view
 function handleClick(e) {
     const projectId = e.currentTarget.dataset.id;
-    const projectUrl = e.currentTarget.dataset.url;
-
-    // Find the project to get its URL
     const project = projects.find(p => p.id == projectId);
 
-    if (project && project.url && project.url !== '#') {
-        // Navigate to project URL
-        window.location.href = project.url;
+    if (project) {
+        openProjectModal(project);
     }
 }
 
-// Create glitch effect on click
-function createGlitchEffect(element) {
-    element.style.animation = 'glitch 0.3s ease';
+// ===================================
+// PROJECT MODAL FUNCTIONALITY
+// ===================================
 
-    setTimeout(() => {
-        element.style.animation = '';
-    }, 300);
+let currentGalleryIndex = 0;
+let currentProject = null;
+
+// Modal elements
+const projectModal = document.getElementById('projectModal');
+const modalOverlay = document.getElementById('modalOverlay');
+const modalClose = document.getElementById('modalClose');
+const modalTitle = document.getElementById('modalTitle');
+const modalDescription = document.getElementById('modalDescription');
+const modalLink = document.getElementById('modalLink');
+const galleryImage = document.getElementById('galleryImage');
+const galleryPrev = document.getElementById('galleryPrev');
+const galleryNext = document.getElementById('galleryNext');
+const galleryDots = document.getElementById('galleryDots');
+
+// Open project modal
+function openProjectModal(project) {
+    currentProject = project;
+    currentGalleryIndex = 0;
+
+    // Set modal content
+    modalTitle.textContent = project.title;
+    modalDescription.textContent = project.fullDescription;
+
+    // Set link
+    if (project.link && project.link !== '' && project.link !== '#') {
+        modalLink.href = project.link;
+        modalLink.style.display = 'inline-block';
+    } else {
+        modalLink.style.display = 'none';
+    }
+
+    // Initialize gallery
+    initGallery(project.gallery);
+
+    // Show modal
+    projectModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
 }
+
+// Close project modal
+function closeProjectModal() {
+    projectModal.classList.remove('active');
+    document.body.style.overflow = '';
+    currentProject = null;
+}
+
+// Initialize gallery
+function initGallery(images) {
+    if (!images || images.length === 0) {
+        galleryImage.src = 'https://via.placeholder.com/800x600/000000/FFFFFF?text=No+Image';
+        galleryPrev.style.display = 'none';
+        galleryNext.style.display = 'none';
+        galleryDots.innerHTML = '';
+        return;
+    }
+
+    // Show first image
+    updateGalleryImage();
+
+    // Create dots
+    galleryDots.innerHTML = '';
+    images.forEach((img, index) => {
+        const dot = document.createElement('div');
+        dot.className = 'gallery-dot';
+        if (index === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => {
+            currentGalleryIndex = index;
+            updateGalleryImage();
+        });
+        galleryDots.appendChild(dot);
+    });
+
+    // Show/hide navigation buttons
+    galleryPrev.style.display = images.length > 1 ? 'flex' : 'none';
+    galleryNext.style.display = images.length > 1 ? 'flex' : 'none';
+
+    // Update button states
+    updateNavigationButtons();
+}
+
+// Update gallery image
+function updateGalleryImage() {
+    if (!currentProject || !currentProject.gallery) return;
+
+    const images = currentProject.gallery;
+    galleryImage.src = images[currentGalleryIndex];
+
+    // Update dots
+    const dots = galleryDots.querySelectorAll('.gallery-dot');
+    dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentGalleryIndex);
+    });
+
+    updateNavigationButtons();
+}
+
+// Update navigation button states
+function updateNavigationButtons() {
+    if (!currentProject || !currentProject.gallery) return;
+
+    const images = currentProject.gallery;
+    galleryPrev.disabled = currentGalleryIndex === 0;
+    galleryNext.disabled = currentGalleryIndex === images.length - 1;
+}
+
+// Gallery navigation - previous
+function previousImage() {
+    if (!currentProject || !currentProject.gallery) return;
+
+    if (currentGalleryIndex > 0) {
+        currentGalleryIndex--;
+        updateGalleryImage();
+    }
+}
+
+// Gallery navigation - next
+function nextImage() {
+    if (!currentProject || !currentProject.gallery) return;
+
+    if (currentGalleryIndex < currentProject.gallery.length - 1) {
+        currentGalleryIndex++;
+        updateGalleryImage();
+    }
+}
+
+// Modal event listeners
+modalClose.addEventListener('click', closeProjectModal);
+modalOverlay.addEventListener('click', closeProjectModal);
+galleryPrev.addEventListener('click', previousImage);
+galleryNext.addEventListener('click', nextImage);
+
+// Keyboard navigation for modal
+document.addEventListener('keydown', (e) => {
+    if (!projectModal.classList.contains('active')) return;
+
+    if (e.key === 'Escape') {
+        closeProjectModal();
+    } else if (e.key === 'ArrowLeft') {
+        previousImage();
+    } else if (e.key === 'ArrowRight') {
+        nextImage();
+    }
+});
 
 // Add parallax effect to the grid based on mouse position
 function addParallaxEffect() {
