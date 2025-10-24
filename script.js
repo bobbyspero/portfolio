@@ -9,6 +9,7 @@ const projects = [
     { id: 7, title: 'SOUND_WAVE.DSP', ascii: '+', description: 'Audio Synthesis' },
     { id: 8, title: 'CLOUD_NEXUS.NET', ascii: '=', description: 'Cloud Infrastructure' },
     { id: 9, title: 'API_GATEWAY.REST', ascii: '~', description: 'Backend Services' },
+    { id: 10, title: 'BRAND_SENTIMENT.TRACK', ascii: '📊', description: 'Brand Sentiment Tracker', url: './brand-sentiment-tracker/dist/index.html' },
 ];
 
 // DOM Elements
@@ -34,6 +35,9 @@ function createGridItem(project) {
     item.dataset.title = project.title;
     item.dataset.ascii = project.ascii;
     item.dataset.id = project.id;
+    if (project.url) {
+        item.dataset.url = project.url;
+    }
 
     item.innerHTML = `
         <div class="grid-content">
@@ -109,15 +113,18 @@ function updateTitlePosition() {
 function handleClick(e) {
     const projectId = e.currentTarget.dataset.id;
     const title = e.currentTarget.dataset.title;
+    const url = e.currentTarget.dataset.url;
 
     // Create glitch effect
     createGlitchEffect(e.currentTarget);
 
-    // Log click (you can replace this with actual navigation)
+    // Log click
     console.log(`Clicked project: ${title} (ID: ${projectId})`);
 
-    // Optional: Navigate to project page
-    // window.location.href = `/project/${projectId}`;
+    // Navigate to project page if URL exists
+    if (url) {
+        window.location.href = url;
+    }
 }
 
 // Create glitch effect on click
