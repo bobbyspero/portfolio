@@ -338,9 +338,9 @@ document.addEventListener('keydown', (e) => {
 function addParallaxEffect() {
     document.addEventListener('mousemove', (e) => {
         // Calculate rotation based on mouse position
-        // More movement = more rotation (divided by smaller number for stronger effect)
-        const moveX = (e.clientX - window.innerWidth / 2) / 30;
-        const moveY = (e.clientY - window.innerHeight / 2) / 30;
+        // Larger divisor = more subtle effect
+        const moveX = (e.clientX - window.innerWidth / 2) / 80;
+        const moveY = (e.clientY - window.innerHeight / 2) / 80;
 
         // Apply smooth rotation to the grid
         gridWrapper.style.transform = `
